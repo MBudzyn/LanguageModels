@@ -42,13 +42,13 @@ class SentenceRanker:
             sentences.append((score, s))
 
         sentences.sort(reverse=True, key=lambda x: x[0])
-        return sentences[:top_k]
+        return sentences[:top_k] + sentences[-top_k:]
 
     def run(self, sentence: str, top_k: int = 3):
         words = sentence.split()
         results = self.rank_permutations(words, top_k=top_k)
 
-        print("\n🔹 Najbardziej naturalne zdania:")
+        print(f"\n🔹 {top_k} najbardziej i {top_k} najmniej naturalne zdania:")
         for i, (score, sent) in enumerate(results, 1):
             print(f"{i}. ({score:.2f}) {sent}")
 
