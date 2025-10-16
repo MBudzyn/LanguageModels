@@ -47,7 +47,7 @@ class ChatBot:
             history += f"{self.names['bot']}:"
         else:
             history += f"{self.names['user']}: {prompt}\n{self.names['bot']}:"
-        history = f"Rozmowa między {self.names['user']} i {self.names['bot']}\n" + history
+        history = f"Rozmowa między {self.names['user']} i {self.names['bot']}\n na temat sportu, ćwiczeń, atletyki, komentatorów, graczy, trenerów" + history
         history += "\n---\n"
         return history
 
@@ -58,9 +58,9 @@ class ChatBot:
         print(short_response)
         print()
         self.update_histories(prompt, short_response, 3)
-        # print(f"PROMPT", full_prompt)
-        # print(f"HISTORIA UŻYTKOWNIKA {self.user_history}")
-        # print(f"HISTORIA BOTA {self.bot_history}")
+        print(f"PROMPT", full_prompt)
+        print(f"HISTORIA UŻYTKOWNIKA {self.user_history}")
+        print(f"HISTORIA BOTA {self.bot_history}")
         print("=" * 70)
 
     def chat(self):
