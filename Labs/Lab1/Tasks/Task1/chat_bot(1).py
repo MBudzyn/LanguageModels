@@ -3,6 +3,7 @@ from transformers import pipeline
 
 class ChatBot:
     def __init__(self):
+
         self.last_prompt = "Jak tam było na siatkówce"
         self.generator = self.load_generator()
         self.bot_history = []

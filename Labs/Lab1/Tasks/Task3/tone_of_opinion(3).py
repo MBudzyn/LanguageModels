@@ -11,7 +11,7 @@ class Task3:
         self.device = 'cpu'
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
         self.model = AutoModelForCausalLM.from_pretrained(self.model_name).to(self.device)
-        self.file_path = "../lecture_materials/txt/reviews_for_task3.txt"
+        self.file_path = "../../lecture_materials/txt/reviews_for_task3.txt"
         self.reviews = self.load_data()
         self.prompts_endings = [
     {"GOOD": "Dobra obsługa!", "BAD": "Zła obsługa."},
