@@ -61,8 +61,6 @@ class Task3:
                 if len(parts) == 2:
                     label, sentence = parts
                     data.append([sentence.strip(), label.strip()])
-        print(f"examples loaded: {len(data)}")
-        print(f"example data:{data[:5]}")
         return data
 
     def prompt_construction(self,sentence, ending):
@@ -94,21 +92,47 @@ class Task3:
         print(f"result: {result}")
         return int(prediction == result)
 
-    def evaluate_accuracy(self, sample_number):
-        part = self.reviews[200-sample_number//2: 200+ sample_number//2]
-        return sum(self.evaluate(sentence, label) for sentence, label in part) / len(part)
+    def evaluate_accuracy(self, sample_number = 100):
+        part = self.reviews[200 - sample_number // 2: 200 + sample_number // 2]
 
-    def print_result(self):
-        print(f"Result: {self.evaluate_accuracy() * 100}% Accuracy")
+        total = len(part)
+        correct_total = 0
+        correct_good = 0
+        correct_bad = 0
+        num_good = 0
+        num_bad = 0
+
+        for sentence, label in part:
+            pred = self.evaluate(sentence, label)
+            correct_total += pred
+
+            if label == "GOOD":
+                num_good += 1
+                correct_good += pred
+            elif label == "BAD":
+                num_bad += 1
+                correct_bad += pred
+
+        accuracy_total = correct_total / total
+        accuracy_good = correct_good / num_good if num_good > 0 else 0
+        accuracy_bad = correct_bad / num_bad if num_bad > 0 else 0
+
+        return accuracy_total, accuracy_good, accuracy_bad
+
+    def print_result(self, sample_number):
+        accuracy_total, accuracy_good, accuracy_bad = self.evaluate_accuracy(sample_number)
+        print(f"Prediction accuracy: {accuracy_total * 100}%")
+        print(f"Good prediction accuracy: {accuracy_good * 100}%")
+        print(f"Bad prediction accuracy: {accuracy_bad * 100}%")
 
     def run(self, sample_number):
         start_time = time.time()
-        accuracy = self.evaluate_accuracy(sample_number)
+        self.print_result(sample_number)
         end_time = time.time()
 
         elapsed = end_time - start_time
-        print(f"Result: {accuracy * 100:.2f}% Accuracy")
-        print(f"Elapsed time: {elapsed:.4f} seconds")
+        print(f"Elapsed time: {elapsed}")
+
 
 
 if __name__ == "__main__":
